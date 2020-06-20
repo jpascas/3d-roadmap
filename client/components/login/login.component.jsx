@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { setUserPreferences } from '../../service/userPreferenceService';
 
 const Login = () => {
   const [user, setUser] = useState({});
@@ -6,7 +7,10 @@ const Login = () => {
   useEffect(() => {
       fetch("/user")
           .then(res => res.json())
-          .then(res => setUser(res))
+          .then(res => { 
+            setUser(res);
+            setUserPreferences(res);
+          })
           .catch(err => {
               console.log(err);
           });

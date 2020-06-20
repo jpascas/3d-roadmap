@@ -13,6 +13,23 @@ export default function Model(props) {
   const group = useRef()
   const { nodes, materials } = useLoader(GLTFLoader, model)
 
+  function getCarFrameMaterial(selectedColor, materialsAvailable) {
+    switch (selectedColor) {
+      case 'red':
+        return materialsAvailable.Red;
+      case 'yellow':
+        return materialsAvailable.Yellow;
+      case 'white':
+        return materialsAvailable.White;
+      case 'black':
+        return materialsAvailable.Black;
+      default:
+        return materialsAvailable.Red;
+    }
+  }
+
+  let materialForCarFrame = getCarFrameMaterial(props.color, materials);
+
   return (
     <group ref={group} {...props} dispose={null}>
       <group position={[0, 0, 0]} rotation={[-Math.PI, 0, -Math.PI]}>
@@ -21,7 +38,7 @@ export default function Model(props) {
         </group>
         <group position={[0, -0.1, -0.12]} rotation={[0, 0, 0]}>
           <group position={[0, 0.04, 0.1]} rotation={[0, 0, 0]}>
-            <mesh material={props.color === 'red' ? materials.Red : materials.White} geometry={nodes.Car_Frame.geometry }/>
+            <mesh material={ materialForCarFrame } geometry={nodes.Car_Frame.geometry }/>
             <mesh material={materials.Windows} geometry={nodes.Windows.geometry} position={[0, 0, 0]} />
           </group>
         </group>
