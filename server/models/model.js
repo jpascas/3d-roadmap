@@ -9,6 +9,7 @@ const userSchema = new Schema(
     signedIn: Boolean,
     name: String,
     email: String,
+    car: Object
   }, 
   { timestamps: true }
 );

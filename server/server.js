@@ -47,6 +47,7 @@ app.get(
   '/auth/google/callback',
   passport.authenticate('google'),
   (req, res) => {
+    
     res.redirect('/');
   },
 );
@@ -57,6 +58,8 @@ app.get('/logout', async (req, res) => {
     await req.user.save();
     req.logout(); // passport kills the cookie
   }
+  res.locals.user = {notSignedIn: 'not'}
+  console.log('INSIDE LOGOUT: ', res.locals.user);
   res.redirect('/');
 });
 
