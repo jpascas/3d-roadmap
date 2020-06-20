@@ -4,21 +4,22 @@ import { useFrame } from 'react-three-fiber';
 import Car from './car.component.jsx';
 import { GetUserPreferences } from '../../service/userPreferenceService';
 
-const CarControls = ({name, locked}) => {
+const CarControls = ({side, locked}) => {
   const group = useRef();
   const keyPresses = {};
+
   const handleKeyDown = (e) => {
     if (!keyPresses[e.key]) {
       keyPresses[e.key] = new Date().getTime();
     }
   };
+
   const handleKeyUp = (e) => {
     delete keyPresses[e.key];
   };
+
   useEventListener('keydown', handleKeyDown);
   useEventListener('keyup', handleKeyUp);
-
-
 
   
   useFrame(() => {
@@ -28,10 +29,10 @@ const CarControls = ({name, locked}) => {
     Object.entries(keyPresses).forEach((e) => {
       const [key] = e;
       switch (key) {
-        case 'w': 
+        case 'ArrowUp': 
           group.current.position.z -= 0.1; 
           break;
-        case 's': 
+        case 'ArrowDown': 
           group.current.position.z += 0.1; 
           break;
         default:
@@ -39,10 +40,10 @@ const CarControls = ({name, locked}) => {
     });
   });
 
-  const data = GetUserPreferences(name);
+  const data = GetUserPreferences(side);
 
   return (
-    <group ref={group} name={name}>
+    <group ref={group} name={side}>
       <Car {...data} />
     </group>
   )

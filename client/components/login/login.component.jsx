@@ -23,7 +23,7 @@ const Login = () => {
         
       </div>
     );
-  } else {
+  } else if (user.notSignedIn){
     return (
       <div id="login">
 
@@ -31,6 +31,11 @@ const Login = () => {
 
       </div>
     );
+  } else {
+    return (
+      <div id="login">
+      </div>
+    )
   }
   
 };

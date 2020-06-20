@@ -40,7 +40,17 @@ passport.use(
         active: true,
         signedIn: true,
         name: profile.displayName,
-        email: profile.emails[0].value
+        email: profile.emails[0].value,
+        car: {
+          backEnd: {
+            color: 'purple',
+            position: [0,0,0]
+          },
+          frontEnd: {
+            color: 'black',
+            position: [0,0,0]
+          }
+        }
       }).save();
       done(null, user);
     }

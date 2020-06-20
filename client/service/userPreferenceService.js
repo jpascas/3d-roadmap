@@ -15,22 +15,29 @@ function GetUserPreferences(side) {
       rotation: [Math.PI, 0, 0],
     },
   };
-  // let preferencesFromLocal = loadState().car;
-  let preferencesFromLocal = {
-    "frontEnd": {
-      position: [0, 0.205, 1],        
-      color: 'black'
-    },
-    "backEnd": {
-      position: [0, -10.205, 1],        
-      color: 'yellow'
-    }
-  };
+  let userInfo = loadState();
+  let carPreferences;
+  if (!userInfo || userInfo.hasOwnProperty("notSignedIn") || !userInfo.car) {
+    console.log("Not signed default info");
+    carPreferences = {
+      "frontEnd": {
+        position: [0, 0.205, 1],
+        color: 'purple'
+      },
+      "backEnd": {
+        position: [0, -10.205, 1],
+        color: 'white'
+      }
+    };
+  } else {
+    console.log("its signed: ", userInfo.car);
+    carPreferences = userInfo.car;
+  }
 
-  Object.assign(preferencesFromLocal.frontEnd, defaultPreference.frontEnd);
-  Object.assign(preferencesFromLocal.backEnd, defaultPreference.backEnd);
+  Object.assign(carPreferences.frontEnd, defaultPreference.frontEnd);
+  Object.assign(carPreferences.backEnd, defaultPreference.backEnd);
 
-  const data = side === "frontEnd" ? preferencesFromLocal.frontEnd : preferencesFromLocal.backEnd;
+  const data = side === "frontEnd" ? carPreferences.frontEnd : carPreferences.backEnd;
   console.log("side: ", side);
   console.log("preference for side:", data);
   
